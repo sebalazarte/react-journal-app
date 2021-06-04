@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import { JournalApp } from './JournalApp';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <JournalApp />
-  </React.StrictMode>,
+  <JournalApp />,
   document.getElementById('root')
 );
 
