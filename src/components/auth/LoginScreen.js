@@ -37,8 +37,8 @@ export const LoginScreen = () => {
                             <b>Sign in with google</b>
                         </p>
                     </div>
-                    <Link to="/auth/register">Create a new account</Link>
                 </div>
+                <Link to="/auth/register" className="link">Create a new account</Link>
             </form>
         </Fragment>
     )
