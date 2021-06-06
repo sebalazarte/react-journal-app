@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useForm } from '../../hooks/useForm';
 import validator from 'validator';
 import { useDispatch, useSelector } from 'react-redux';
-import { RemoveError, SetError } from '../../actions/ui';
+import { removeError, setError } from '../../actions/ui';
 import { startRegister } from '../../actions/auth';
 
 export const RegisterScreen = () => {
@@ -32,21 +32,21 @@ export const RegisterScreen = () => {
     const isFormValid = () => {
 
         if (validator.isEmpty(name)) {
-            dispatch(SetError('el nombre es requerido'));
+            dispatch(setError('el nombre es requerido'));
             return false;
         }
 
         if (!validator.isEmail(email)) {
-            dispatch(SetError('no es un email valido'))
+            dispatch(setError('no es un email valido'))
             return false;
         }
 
         if (password !== password2 || password.length < 5) {
-            dispatch(SetError('las contraseñas no son iguales o son mejor de 5 caracteres'))
+            dispatch(setError('las contraseñas no son iguales o son mejor de 5 caracteres'))
             return false;
         }
 
-        dispatch(RemoveError());
+        dispatch(removeError());
         return true;
     }
 
