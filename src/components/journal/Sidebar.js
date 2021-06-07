@@ -1,13 +1,20 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { startLogout } from '../../actions/auth';
 import { JournalEstries } from './JournalEstries'
+import { startNewNote } from '../../actions/notes'
 
 export const Sidebar = () => {
 
     const dispatch = useDispatch();
-    const handleLogout = () =>{
+    const handleLogout = () => {
         dispatch(startLogout());
+    }
+
+    const { name } = useSelector(state => state.auth);
+
+    const handleAddNew = () => {
+        dispatch(startNewNote());
     }
 
     return (
@@ -15,21 +22,24 @@ export const Sidebar = () => {
             <div className="journal__sidebar-navbar">
                 <h3 className="mt-s">
                     <i className="far fa-moon"></i>
-                    <span>Sebastian</span>
+                    <span>{name}</span>
                 </h3>
-                <button 
+                <button
                     className="btn"
                     onClick={handleLogout}
-                    >
+                >
                     Logout
                 </button>
             </div>
-            <div className="journal__new-entry">
+            <div
+                className="journal__new-entry"
+                onClick={handleAddNew}
+            >
                 <i className="far fa-calendar-plus fa-5x"></i>
                 <p className="mt-5">New entry</p>
             </div>
 
-            <JournalEstries/>
+            <JournalEstries />
         </aside>
     )
 }
