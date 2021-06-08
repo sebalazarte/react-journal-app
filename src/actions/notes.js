@@ -2,9 +2,10 @@ import { db } from "../firebase/firebase-config";
 import { types } from "../types/types";
 import { loadNotes } from '../helpers/loadNotes';
 import Swal from 'sweetalert2'
+import { fileUpload } from "../helpers/fileUpload";
 
 export const startNewNote = () => {
-    return async(dispatch, getState) => {
+    return async (dispatch, getState) => {
 
         const { uid } = getState().auth;
         const newNote = {
@@ -27,7 +28,7 @@ export const activeNote = (id, note) => ({
 });
 
 export const startLoadingNotes = (uid) => {
-    return async(dispatch) => {
+    return async (dispatch) => {
         const notes = await loadNotes(uid);
         dispatch(setNotes(notes));
     }
@@ -42,16 +43,16 @@ export const startSaveNote = (note) => {
     return async (dispatch, getState) => {
         const { uid } = getState().auth;
 
-        if(!note.url){
+        if (!note.url) {
             delete note.url;
         }
 
-        const noteToFirestore = {...note};
+        const noteToFirestore = { ...note };
         delete noteToFirestore.id;
 
         await db.doc(`${uid}/journal/notes/${note.id}`).update(noteToFirestore);
         dispatch(refreshNote(note.id, note));
-        Swal.fire('Save', `the note ${note.title} was saved` , 'success');
+        Swal.fire('Save', `the note ${note.title} was saved`, 'success');
     }
 }
 
@@ -65,3 +66,12 @@ export const refreshNote = (id, note) => ({
         }
     }
 })
+
+export const startUploading = (file) => {
+    return async(dispatch, getState) => {
+        const { active: activeNote } = getState().notes;
+        const fileUrl = await fileUpload(file);
+        console.log(fileUrl);
+    }
+}
+
